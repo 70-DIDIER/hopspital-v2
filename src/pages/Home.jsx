@@ -71,13 +71,13 @@ function Home() {
                   >
                     Hopital
                   </a>
-                  <a
+                  <Link
                     style={{ backgroundColor: "#0077B6", color: "#000000", fontWeight: "bold" }}
-                    href=""
+                    to="/appointement"
                     className="btn btn-outline-light rounded-pill hero-btn"
                   >
                     Prendre rendez-vous
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

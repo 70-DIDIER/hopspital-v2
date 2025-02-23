@@ -22,7 +22,6 @@ export default function Contact(){
                     className="fa fa-2x fa-location-arrow text-white"
                     style={{ transform: "rotate(15deg)" }}
                     />
-                    <i className="bi bi-send text-white"></i>
 
                 </div>
                 <h6 className="mb-0">Lomé, TOGO</h6>
