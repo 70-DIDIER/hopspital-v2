@@ -1,0 +1,25 @@
+.custom-btn {
+    color: #0077B6 !important;
+}
+
+.login-button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #0077B6; /* Couleur de fond bleue */
+    color: white; /* Couleur du texte blanche */
+    padding: 10px 20px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    text-align: center; /* Alignement du texte */
+    text-decoration: none; /* Pas de soulignement */
+    font-size: 16px; /* Taille de la police */
+    transition: background-color 0.3s ease; /* Transition pour l'effet de survol */
+}
+
+.login-button:hover {
+    background-color: #0056b3; /* Couleur de fond plus foncée au survol */
+}
+
+
+
+

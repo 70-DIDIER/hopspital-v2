@@ -1,0 +1,174 @@
+/* style.css */
+
+/* Réinitialisation des styles par défaut */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Typographie */
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #FFFFFF;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: #000033; /* Bleu foncé (#0) */
+}
+
+h1 {
+    font-size: 48px;
+}
+
+h2 {
+    font-size: 36px;
+}
+
+h3 {
+    font-size: 30px;
+}
+
+h4 {
+    font-size: 24px;
+}
+
+p {
+    font-size: 16px;
+    color: #333333;
+}
+
+a {
+    color: #000033; /* Bleu foncé (#0) */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ADD8E6; /* Bleu clair */
+}
+
+/* En-tête */
+header {
+    background-color: #FFFFFF;
+    padding: 20px 0;
+    border-bottom: 1px solid #F0F0F0; /* Gris clair */
+}
+
+header .logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    color: #000033; /* Bleu foncé (#0) */
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    font-size: 18px;
+    color: #333333; /* Gris foncé */
+}
+
+header nav ul li a:hover {
+    color: #000033; /* Bleu foncé (#0) */
+}
+
+/* Boutons */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #000033; /* Bleu foncé (#0) */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #ADD8E6; /* Bleu clair */
+    color: #000033; /* Bleu foncé (#0) */
+}
+
+/* Sections */
+.section {
+    padding: 60px 0;
+}
+
+.section.blue-bg {
+    background-color: #ADD8E6; /* Bleu clair */
+}
+
+.section.white-bg {
+    background-color: #FFFFFF;
+}
+
+.section h2 {
+    margin-bottom: 20px;
+}
+
+.section p {
+    margin-bottom: 20px;
+}
+
+/* Pied de page */
+footer {
+    background-color: #F0F0F0; /* Gris clair */
+    padding: 20px 0;
+    text-align: center;
+    color: #333333; /* Gris foncé */
+}
+
+footer p {
+    margin: 0;
+}
+
+footer a {
+    color: #000033; /* Bleu foncé (#0) */
+}
+
+footer a:hover {
+    color: #ADD8E6; /* Bleu clair */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header nav ul li {
+        margin: 10px 0;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+
+    h3 {
+        font-size: 24px;
+    }
+
+    .section {
+        padding: 40px 0;
+    }
+}

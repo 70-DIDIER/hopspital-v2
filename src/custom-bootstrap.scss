@@ -1,0 +1,24 @@
+// Définition de la couleur primaire
+$primary: #0077B6;
+$secondary: #0a4ff0;
+$light: #EFF5F9;
+$dark: #3c3f48;
+$font-family-sans-serif: 'Roboto', sans-serif;
+
+$headings-font-family: 'Roboto Condensed', sans-serif;
+
+$body-color: #848E9F;
+
+$headings-color: $dark;
+
+$headings-font-weight: 700;
+
+$display-font-weight: 700;
+
+$enable-responsive-font-sizes: true;
+
+$border-radius: 8px;
+
+$link-decoration: none;
+// Import des fichiers Bootstrap
+@import "bootstrap/scss/bootstrap";
