@@ -13,8 +13,8 @@ function Pharmacies() {
         c_identifiant: 'g5IoGDIaSOLbEj7n-in4U4Ao42_eZHgQ',
         u_identifiant: 'At5MwG82mbKa5hgPLOCS7oXnACsVg2yO',
         client: JSON.stringify({ fullname: "Jerome", phone: "+22891121670" }),
-        latitude: '6.1953',
-        longitude: '1.1996'
+        latitude: '6.202598',
+        longitude: '1.194422',
     };
 
     useEffect(() => {
@@ -99,7 +99,7 @@ function Pharmacies() {
 
             {/* Message si aucune pharmacie trouvée */}
             {pharmacies.length === 0 && (
-                <div className="alert alert-warning mt-4">
+                <div className="alert alert-primary mt-4">
                     Aucune pharmacie de garde trouvée pour cette période.
                 </div>
             )}

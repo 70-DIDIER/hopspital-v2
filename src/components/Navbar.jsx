@@ -24,7 +24,7 @@ function Navbar() {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarCollapse">
                         <div className="navbar-nav ms-auto py-0">
-                            <Link to="/" className="nav-item nav-link active">
+                            <Link to="/" className="nav-item nav-link">
                                 Accueil
                             </Link>
                             <Link to="/about" className="nav-item nav-link">
@@ -64,10 +64,10 @@ function Navbar() {
                                     </li>
                                 </ul>
                             </div>
-                            <Link to="/contact" className="nav-item nav-link">
+                            <Link to="/contact" className="nav-item nav-link me-5">
                                 Contact
                             </Link>
-                            <Link to="/contact" className="login-button">
+                            <Link to="/connexion" className="login-button">
                                 Connexion
                             </Link>
                         </div>
