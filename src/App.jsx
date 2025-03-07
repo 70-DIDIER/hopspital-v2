@@ -13,6 +13,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './custom-bootstrap.scss';
 import Pharmacies from './pages/services/Pharmacie';
 import Appointement from './pages/services/Appointement';
+import Hopital from './pages/services/Hopital';
 
 function App() {
   console.log('App component rendered');
@@ -25,10 +26,10 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/pharmacies" element={<Pharmacies />} />
+        <Route path="/Hopital" element={<Hopital />} />
         <Route path="/appointement" element={<Appointement />} />
       </Routes>
       <Footer />
-
     </Router>
   );
 }

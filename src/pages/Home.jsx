@@ -64,13 +64,13 @@ function Home() {
                   >
                     Pharmacie de Garde
                   </Link>
-                  <a
+                  <Link
                     style={{ backgroundColor: "#0077B6", color: "#000000", fontWeight: "bold" }}
-                    href=""
+                    to="/Hopital"
                     className="btn btn-outline-light rounded-pill hero-btn"
                   >
                     Hopital
-                  </a>
+                  </Link>
                   <Link
                     style={{ backgroundColor: "#0077B6", color: "#000000", fontWeight: "bold" }}
                     to="/appointement"
