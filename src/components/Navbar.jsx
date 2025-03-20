@@ -1,13 +1,26 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 
 function Navbar() {
+    const { user } = useAuth();
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+        } catch (error) {
+            console.error("Erreur lors de la déconnexion:", error);
+        }
+    };
+
     return (
         <div className="container-fluid sticky-top bg-white shadow-sm">
             <div className="container">
                 <nav className="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
                     <Link to="/" className="navbar-brand">
-                        <h1 className="m-0 logo" style={{ color: '#0077B6' }}>
-                            <i className="bi bi-h-square" style={{ color: '#0077B6' }}></i>
+                        <h1 className="m-0 logo" style={{ color: "#0077B6" }}>
+                            <i className="bi bi-h-square" style={{ color: "#0077B6" }}></i>
                             MyHospital
                         </h1>
                     </Link>
@@ -51,10 +64,9 @@ function Navbar() {
                                             Rendez-vous
                                         </Link>
                                     </li>
-                                    
                                     <li>
                                         <Link to="/pharmacies" className="dropdown-item">
-                                            Trouver les pharmacie de garde
+                                            Trouver les pharmacies de garde
                                         </Link>
                                     </li>
                                     <li>
@@ -67,9 +79,17 @@ function Navbar() {
                             <Link to="/contact" className="nav-item nav-link me-5">
                                 Contact
                             </Link>
-                            <Link to="/connexion" className="login-button">
-                                Connexion
-                            </Link>
+
+                            {/* Affichage de Connexion ou Déconnexion selon l'état de l'utilisateur */}
+                            {user ? (
+                                <button onClick={handleLogout} className="login-button">
+                                    Déconnexion
+                                </button>
+                            ) : (
+                                <Link to="/login" className="login-button">
+                                    Connexion
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </nav>
