@@ -22,7 +22,12 @@ export default function Service() {
                     Urgences médicales
                   </h4>
                   <p className="m-0">
-                    Contactez rapidement les hôpitaux ou cliniques les plus proches pour une intervention immédiate. Notre système de géolocalisation vous aide à identifier les établissements disponibles en temps réel.
+                    <ul>
+                      <li><a href="tel:117">📞 Police Secours (117)</a></li>
+                      <li><a href="tel:161">📞 Police Secours (161 - Mobile)</a></li>
+                      <li><a href="tel:118">🚒 Sapeurs-Pompiers (118)</a></li>
+                      <li><a href="tel:+22822212501">🏥 CHU Sylvanus Olympio (+228 22 21 25 01)</a></li>
+                    </ul>
                   </p>
                   <a className="btn btn-lg btn-primary rounded-pill" href="">
                     <i className="bi bi-arrow-right" />
@@ -34,10 +39,9 @@ export default function Service() {
                   <div className="service-icon mb-4">
                     <i className="fa fa-2x fa-procedures text-white" />
                   </div>
-                  <h4 className="mb-3">Operation &amp; Surgery</h4>
+                  <h4 className="mb-3">Hôpital &amp; Clinique</h4>
                   <p className="m-0">
-                    Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum
-                    stet, justo elitr dolor amet sit
+                    Trouver les hôpitaux et laboratoire proche de vous
                   </p>
                   <a className="btn btn-lg btn-primary rounded-pill" href="">
                     <i className="bi bi-arrow-right" />
@@ -53,7 +57,7 @@ export default function Service() {
                     Consultation en ligne
                   </h4>
                   <p className="m-0">
-                    Accédez à des consultations médicales depuis chez vous. Échangez avec des professionnels de santé pour un diagnostic rapide et des conseils adaptés.
+                    Trouvez les docteurs qualifiés pour vos consultations en ligne ou à domicile
                   </p>
                   <a className="btn btn-lg btn-primary rounded-pill" href="">
                     <i className="bi bi-arrow-right" />
@@ -68,7 +72,7 @@ export default function Service() {
                   <h4 className="mb-3">Service Ambulance</h4>
                   <p className="m-0">
                     Pour les urgences contactez les numeros suivantes :
-                   Santé(800), Sapeur pompier(118)
+                    Santé(800), Sapeur pompier(118)
                   </p>
                   <a className="btn btn-lg btn-primary rounded-pill" href="">
                     <i className="bi bi-arrow-right" />

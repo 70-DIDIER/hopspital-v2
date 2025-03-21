@@ -70,7 +70,7 @@ function Footer() {
                             <form action="">
                                 <div className="input-group">
                                     <input type="text" className="form-control p-3 border-0" placeholder="Your Email Address" />
-                                    <button className="btn custom-btn ">Connectez-vous</button>
+                                    <button className="btn btn-primary ">Connectez-vous</button>
                                 </div>
                             </form>
                         </div>

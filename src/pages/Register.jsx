@@ -52,7 +52,7 @@ export default function Register() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <label className="form-label">Password</label>
+                        <label className="form-label">Mot de passe</label>
                     </div>
 
                     {/* Répéter le mot de passe */}
@@ -64,13 +64,13 @@ export default function Register() {
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
-                        <label className="form-label">Repeat password</label>
+                        <label className="form-label">Confirmez votre mot de passe</label>
                     </div>
 
                     {error && <p style={{ color: "red" }}>{error}</p>}
 
                     <button type="submit" className="btn btn-primary btn-block mb-3">
-                        Sign up
+                    S'inscrire
                     </button>
                 </form>
             </div>

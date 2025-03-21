@@ -70,7 +70,7 @@ function Navbar() {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/search" className="dropdown-item">
+                                        <Link to="/" className="dropdown-item">
                                             Recherche
                                         </Link>
                                     </li>

@@ -30,24 +30,22 @@ export default function Login() {
                             <div className="row g-0">
                                 <div className="col-md-6 col-lg-5 d-none d-md-block">
                                     <img
-                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                                        src="https://i.postimg.cc/4dt6k518/male-nurse-working-clinic.jpg"
                                         alt="login form"
                                         className="img-fluid"
-                                        style={{ borderRadius: "1rem 0 0 1rem" }}
+                                        style={{ borderRadius: "1rem 0 0 1rem", height: "500px" }}
                                     />
                                 </div>
                                 <div className="col-md-6 col-lg-7 d-flex align-items-center">
                                     <div className="card-body p-4 p-lg-5 text-black">
                                         <form onSubmit={handleLogin}>
                                             <div className="d-flex align-items-center mb-3 pb-1">
-                                                <i
-                                                    className="fas fa-cubes fa-2x me-3"
-                                                    style={{ color: "#ff6219" }}
-                                                />
-                                                <span className="h1 fw-bold mb-0">Logo</span>
+                                               
+                                                <i className="bi bi-h-square fa-2x me-3" style={{ color: "#0077B6" }}></i>
+                                                <span className="h1 fw-bold mb-0">MyHospital</span>
                                             </div>
                                             <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: 1 }}>
-                                                Sign into your account
+                                            Connectez-vous à votre compte
                                             </h5>
                                             {error && <p style={{ color: "red" }}>{error}</p>}
                                             <div className="form-outline mb-4">
@@ -60,7 +58,7 @@ export default function Login() {
                                                     required
                                                 />
                                                 <label className="form-label" htmlFor="form2Example17">
-                                                    Email address
+                                                Votre Adresse Email
                                                 </label>
                                             </div>
                                             <div className="form-outline mb-4">
@@ -73,7 +71,7 @@ export default function Login() {
                                                     required
                                                 />
                                                 <label className="form-label" htmlFor="form2Example27">
-                                                    Password
+                                                    Votre mot de passe
                                                 </label>
                                             </div>
                                             <div className="pt-1 mb-4">
@@ -81,24 +79,19 @@ export default function Login() {
                                                     className="btn btn-dark btn-lg btn-block"
                                                     type="submit"
                                                 >
-                                                    Login
+                                                   Se connecter
                                                 </button>
                                             </div>
                                             <a className="small text-muted" href="#!">
-                                                Forgot password?
+                                            Mot de passe oublié ?
                                             </a>
                                             <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
-                                                Don't have an account?{" "}
+                                            N'avez-vous pas de compte ?{" "}
                                                 <a href="/register" className="login-button" style={{ color: "#393f81" }}>
-                                                    Register here
+                                                Inscrivez-vous ici
                                                 </a>
                                             </p>
-                                            <a href="#!" className="small text-muted">
-                                                Terms of use.
-                                            </a>
-                                            <a href="#!" className="small text-muted">
-                                                Privacy policy
-                                            </a>
+                                            
                                         </form>
                                     </div>
                                 </div>
