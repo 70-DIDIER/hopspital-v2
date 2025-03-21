@@ -100,10 +100,9 @@ export default function Service() {
                   <div className="service-icon mb-4">
                     <i className="fa fa-2x fa-microscope text-white" />
                   </div>
-                  <h4 className="mb-3">Blood Testing</h4>
+                  <h4 className="mb-3">Médecin à domicile</h4>
                   <p className="m-0">
-                    Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum
-                    stet, justo elitr dolor amet sit
+                    Trouver des medcin pour vous consulter à la maison
                   </p>
                   <a className="btn btn-lg btn-primary rounded-pill" href="">
                     <i className="bi bi-arrow-right" />
