@@ -22,7 +22,7 @@ export default function Login() {
     };
 
     return (
-        <section className="" style={{ backgroundColor: "#9A616D" }}>
+        <section className="" style={{ backgroundColor: "gray" }}>
             <div className="container py-5 h-100">
                 <div className="row d-flex justify-content-center align-items-center h-100">
                     <div className="col col-xl-10">
@@ -88,7 +88,7 @@ export default function Login() {
                                             <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
                                             N'avez-vous pas de compte ?{" "}
                                                 <a href="/register" className="login-button" style={{ color: "#393f81" }}>
-                                                Inscrivez-vous ici
+                                                <span style={{ color: "#ffff" }}>Inscrivez-vous ici</span>
                                                 </a>
                                             </p>
                                             
