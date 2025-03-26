@@ -8,6 +8,20 @@ function Hopital() {
     const [geoError, setGeoError] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    // Fonction de calcul de distance (formule d'Haversine)
+    const calculerDistance = (lat1, lon1, lat2, lon2) => {
+        const R = 6371; // Rayon de la Terre en km
+        const dLat = (lat2 - lat1) * (Math.PI / 180);
+        const dLon = (lon2 - lon1) * (Math.PI / 180);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * (Math.PI / 180)) * 
+            Math.cos(lat2 * (Math.PI / 180)) * 
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return Math.round(R * c); // Arrondi au km près
+    };
+
     // Demander la géolocalisation
     useEffect(() => {
         if (!navigator.geolocation) {
@@ -90,7 +104,12 @@ function Hopital() {
                             <div className="d-flex w-100 align-items-center pe-0">
                                 <strong className="me-auto">{hopital.tags.name || "Hôpital sans nom"}</strong>
                                 <Badge bg="primary" className="text-nowrap" style={{ marginLeft: "auto" }}>
-                                    📍 {hopital.lat}, {hopital.lon}
+                                    📍 {calculerDistance(
+                                        location.latitude,
+                                        location.longitude,
+                                        hopital.lat,
+                                        hopital.lon
+                                    )} km
                                 </Badge>
                             </div>
                         </Accordion.Header>
