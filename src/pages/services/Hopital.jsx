@@ -8,9 +8,8 @@ function Hopital() {
     const [geoError, setGeoError] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Fonction de calcul de distance (formule d'Haversine)
     const calculerDistance = (lat1, lon1, lat2, lon2) => {
-        const R = 6371; // Rayon de la Terre en km
+        const R = 6371;
         const dLat = (lat2 - lat1) * (Math.PI / 180);
         const dLon = (lon2 - lon1) * (Math.PI / 180);
         const a =
@@ -19,10 +18,9 @@ function Hopital() {
             Math.cos(lat2 * (Math.PI / 180)) * 
             Math.sin(dLon / 2) * Math.sin(dLon / 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return Math.round(R * c); // Arrondi au km près
+        return Math.round(R * c);
     };
 
-    // Demander la géolocalisation
     useEffect(() => {
         if (!navigator.geolocation) {
             setGeoError("La géolocalisation n'est pas supportée par votre navigateur");
@@ -44,7 +42,6 @@ function Hopital() {
         );
     }, []);
 
-    // Appel API OpenStreetMap pour récupérer les hôpitaux à proximité
     useEffect(() => {
         if (!location) return;
 
@@ -57,7 +54,19 @@ function Hopital() {
                 `;
 
                 const response = await axios.get("https://overpass-api.de/api/interpreter?data=" + encodeURIComponent(query));
-                setHopitaux(response.data.elements || []);
+                
+                // Ajouter la distance et trier les résultats
+                const hopitauxAvecDistance = response.data.elements.map(hopital => ({
+                    ...hopital,
+                    distance: calculerDistance(
+                        location.latitude,
+                        location.longitude,
+                        hopital.lat,
+                        hopital.lon
+                    )
+                })).sort((a, b) => a.distance - b.distance); // Tri par distance croissante
+
+                setHopitaux(hopitauxAvecDistance);
             } catch (error) {
                 console.error("Erreur de récupération des hôpitaux:", error);
             } finally {
