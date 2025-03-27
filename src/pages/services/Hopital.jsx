@@ -3,7 +3,7 @@ import axios from "axios";
 import { Accordion, Badge, Button, Spinner, Alert } from "react-bootstrap";
 
 function Hopital() {
-    const [hopitaux, setHopitaux] = useState([]);
+    const [etablissements, setEtablissements] = useState([]);
     const [location, setLocation] = useState(null);
     const [geoError, setGeoError] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -45,36 +45,44 @@ function Hopital() {
     useEffect(() => {
         if (!location) return;
 
-        const fetchHopitaux = async () => {
+        const fetchEtablissements = async () => {
             try {
                 const query = `
                     [out:json];
-                    node["amenity"="hospital"](around:10000,${location.latitude},${location.longitude});
+                    (
+                        node["amenity"~"hospital|clinic|doctors"](around:10000,${location.latitude},${location.longitude});
+                        way["amenity"~"hospital|clinic|doctors"](around:10000,${location.latitude},${location.longitude});
+                        relation["amenity"~"hospital|clinic|doctors"](around:10000,${location.latitude},${location.longitude});
+                    );
                     out body;
+                    >;
+                    out skel qt;
                 `;
 
-                const response = await axios.get("https://overpass-api.de/api/interpreter?data=" + encodeURIComponent(query));
+                const response = await axios.get(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`);
                 
-                // Ajouter la distance et trier les résultats
-                const hopitauxAvecDistance = response.data.elements.map(hopital => ({
-                    ...hopital,
-                    distance: calculerDistance(
-                        location.latitude,
-                        location.longitude,
-                        hopital.lat,
-                        hopital.lon
-                    )
-                })).sort((a, b) => a.distance - b.distance); // Tri par distance croissante
+                const results = response.data.elements
+                    .filter(el => el.tags && el.tags.name)
+                    .map(etablissement => ({
+                        ...etablissement,
+                        distance: calculerDistance(
+                            location.latitude,
+                            location.longitude,
+                            etablissement.lat,
+                            etablissement.lon
+                        )
+                    }))
+                    .sort((a, b) => a.distance - b.distance);
 
-                setHopitaux(hopitauxAvecDistance);
+                setEtablissements(results);
             } catch (error) {
-                console.error("Erreur de récupération des hôpitaux:", error);
+                console.error("Erreur de récupération des données:", error);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchHopitaux();
+        fetchEtablissements();
     }, [location]);
 
     if (geoError) {
@@ -105,37 +113,40 @@ function Hopital() {
 
     return (
         <div className="container mt-5">
-            <h1 className="text-center mb-4">Hôpitaux à Proximité</h1>
+            <h1 className="text-center mb-4">Établissements de Santé à Proximité</h1>
             <Accordion defaultActiveKey="0">
-                {hopitaux.map((hopital, index) => (
-                    <Accordion.Item eventKey={index.toString()} key={hopital.id}>
+                {etablissements.map((etablissement, index) => (
+                    <Accordion.Item eventKey={index.toString()} key={etablissement.id}>
                         <Accordion.Header className="pe-0">
                             <div className="d-flex w-100 align-items-center pe-0">
-                                <strong className="me-auto">{hopital.tags.name || "Hôpital sans nom"}</strong>
-                                <Badge bg="primary" className="text-nowrap" style={{ marginLeft: "auto" }}>
-                                    📍 {calculerDistance(
-                                        location.latitude,
-                                        location.longitude,
-                                        hopital.lat,
-                                        hopital.lon
-                                    )} km
+                                <strong className="me-auto">
+                                    {etablissement.tags.name}
+                                    <small className="text-muted d-block mt-1">
+                                        {{
+                                            hospital: "Hôpital",
+                                            clinic: "Clinique",
+                                            doctors: "Cabinet médical"
+                                        }[etablissement.tags.amenity] || "Établissement de santé"}
+                                    </small>
+                                </strong>
+                                <Badge bg="primary" className="text-nowrap ms-2">
+                                    {etablissement.distance} km
                                 </Badge>
                             </div>
                         </Accordion.Header>
                         <Accordion.Body>
                             <div className="row g-3 align-items-start">
-                                {/* Colonne descriptions */}
                                 <div className="col-md-8">
-                                    <p><strong>Nom :</strong> {hopital.tags.name || "Non spécifié"}</p>
-                                    <p><strong>Spécialité :</strong> {hopital.tags.speciality || "Non précisée"}</p>
-                                    <p><strong>Adresse :</strong> {hopital.tags["addr:street"] || "Non renseignée"}</p>
+                                    <p><strong>Type :</strong> {etablissement.tags.amenity}</p>
+                                    <p><strong>Adresse :</strong> {etablissement.tags["addr:street"] || "Non renseignée"}</p>
+                                    <p><strong>Téléphone :</strong> {etablissement.tags.phone || "Non disponible"}</p>
                                     <Button
                                         variant="info"
-                                        href={`https://www.google.com/maps/search/?api=1&query=${hopital.lat},${hopital.lon}`}
+                                        href={`https://www.google.com/maps/search/?api=1&query=${etablissement.lat},${etablissement.lon}`}
                                         target="_blank"
                                         className="mt-2"
                                     >
-                                        Voir sur la carte
+                                        Itinéraire
                                     </Button>
                                 </div>
                             </div>
@@ -144,10 +155,9 @@ function Hopital() {
                 ))}
             </Accordion>
 
-            {/* Message si aucun hôpital trouvé */}
-            {hopitaux.length === 0 && (
+            {etablissements.length === 0 && (
                 <div className="alert alert-primary mt-4">
-                    Aucun hôpital trouvé dans votre zone.
+                    Aucun établissement de santé trouvé dans un rayon de 10 km.
                 </div>
             )}
         </div>

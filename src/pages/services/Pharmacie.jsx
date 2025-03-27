@@ -106,7 +106,7 @@ function Pharmacies() {
                             <div className="d-flex w-100 align-items-center pe-0">
                                 <strong className="me-auto">{pharmacie.nom}</strong>
                                 <Badge
-                                    bg="success"
+                                    bg="primary"
                                     className="text-nowrap"
                                     style={{ marginLeft: 'auto' }}>
                                     DE GARDE {pharmacie.distance && `- ${pharmacie.distance}`}
