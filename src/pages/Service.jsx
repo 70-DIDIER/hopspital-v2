@@ -1,121 +1,144 @@
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Service() {
+  const [emergencyServices, setEmergencyServices] = useState({
+    hospital: null,
+    pharmacy: null
+  });
+
+  useEffect(() => {
+    const fetchEmergencyData = async () => {
+      try {
+        const overpassQuery = `
+          [out:json];
+          (
+            node["amenity"="hospital"](around:5000,6.172,1.231);
+            node["amenity"="pharmacy"](around:5000,6.172,1.231);
+          );
+          out;
+        `;
+
+        const response = await fetch(
+          `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(overpassQuery)}`
+        );
+        const data = await response.json();
+        
+        // Séparation des résultats par type
+        const services = data.elements.reduce((acc, service) => {
+          if (service.tags && service.tags.amenity === 'hospital') acc.hospital = service;
+          if (service.tags && service.tags.amenity === 'pharmacy') acc.pharmacy = service;
+          return acc;
+        }, { hospital: null, pharmacy: null });
+
+        setEmergencyServices(services);
+      } catch (error) {
+        console.error("Erreur de récupération des données:", error);
+      }
+    };
+
+    fetchEmergencyData();
+  }, []);
+
   return (
-    <>
-      <>
-        <div className="container-fluid py-5">
-          <div className="container">
-            <div className="text-center mx-auto mb-5" style={{ maxWidth: 500 }}>
-              <h5 className="d-inline-block text-primary text-uppercase border-bottom border-5">
-                Services
-              </h5>
-              <h1 className="display-4">Excellents services médicaux</h1>
-            </div>
-            <div className="row g-5">
-              <div className="col-lg-4 col-md-6">
-                <div className="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                  <div className="service-icon mb-4">
-                    <i className="fa fa-2x fa-user-md text-white" />
-                  </div>
-                  <h4 className="mb-3">
-                    Urgences médicales
-                  </h4>
-                  <p className="m-0">
-                    <ul>
-                      <li><a href="tel:117">📞 Police Secours (117)</a></li>
-                      <li><a href="tel:161">📞 Police Secours (161 - Mobile)</a></li>
-                      <li><a href="tel:118">🚒 Sapeurs-Pompiers (118)</a></li>
-                      <li><a href="tel:+22822212501">🏥 CHU Sylvanus Olympio (+228 22 21 25 01)</a></li>
-                    </ul>
-                  </p>
-                  <a className="btn btn-lg btn-primary rounded-pill" href="">
-                    <i className="bi bi-arrow-right" />
-                  </a>
-                </div>
+    <div className="container-fluid py-5">
+      <div className="container">
+        <div className="text-center mx-auto mb-5" style={{ maxWidth: 500 }}>
+          <h5 className="d-inline-block text-primary text-uppercase border-bottom border-5">
+            Services
+          </h5>
+          <h1 className="display-4">Excellents services médicaux</h1>
+        </div>
+
+        <div className="row g-5">
+          <div className="col-lg-12">
+            <div className="service-item bg-light rounded p-4">
+              <h4 className="mb-4">🚨 Services d'urgence prioritaires</h4>
+              
+              <div className="table-responsive">
+                <table className="table align-middle">
+                  <thead>
+                    <tr className="table-primary">
+                      <th style={{ width: "40px" }}></th>
+                      <th>Établissement</th>
+                      <th>Contact</th>
+                      <th>Type</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* Hôpital */}
+                    {emergencyServices.hospital && (
+                      <tr>
+                        <td>
+                          <i className="fas fa-hospital text-danger fs-4"></i>
+                        </td>
+                        <td>
+                          <strong>{emergencyServices.hospital.tags.name || "Hôpital"}</strong>
+                          <br />
+                          <small className="text-muted">
+                            {emergencyServices.hospital.tags["addr:street"] || ""}
+                          </small>
+                        </td>
+                        <td>
+                          {emergencyServices.hospital.tags.phone || "Non renseigné"}
+                        </td>
+                        <td>
+                          <span className="badge bg-light text-dark border">
+                            Hôpital
+                          </span>
+                        </td>
+                      </tr>
+                    )}
+
+                    {/* Pharmacie */}
+                    {emergencyServices.pharmacy && (
+                      <tr>
+                        <td>
+                          <i className="fas fa-prescription-bottle-medical text-primary fs-4"></i>
+                        </td>
+                        <td>
+                          <strong>{emergencyServices.pharmacy.tags.name || "Pharmacie"}</strong>
+                          <br />
+                          <small className="text-muted">
+                            {emergencyServices.pharmacy.tags["addr:street"] || ""}
+                          </small>
+                        </td>
+                        <td>
+                          {emergencyServices.pharmacy.tags.phone || "Non renseigné"}
+                        </td>
+                        <td>
+                          <span className="badge bg-light text-dark border">
+                            Pharmacie
+                          </span>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
               </div>
-              <div className="col-lg-4 col-md-6">
-                <div className="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                  <div className="service-icon mb-4">
-                    <i className="fa fa-2x fa-procedures text-white" />
+
+              {/* Numéros d'urgence */}
+              <div className="mt-4 p-3 bg-primary rounded">
+                <h5 className="text-white mb-3">📞 Numéros d'urgence nationaux :</h5>
+                <div className="row text-white">
+                  <div className="col-md-4 mb-2">
+                    <i className="fas fa-police-car me-2"></i>
+                    Police Secours : <a href="tel:117" className="text-white">117</a>
                   </div>
-                  <h4 className="mb-3">Hôpital &amp; Clinique</h4>
-                  <p className="m-0">
-                    Trouver les hôpitaux et laboratoire proche de vous
-                  </p>
-                  <a className="btn btn-lg btn-primary rounded-pill" href="">
-                    <i className="bi bi-arrow-right" />
-                  </a>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6">
-                <div className="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                  <div className="service-icon mb-4">
-                    <i className="fa fa-2x fa-stethoscope text-white" />
+                  <div className="col-md-4 mb-2">
+                    <i className="fas fa-fire-extinguisher me-2"></i>
+                    Pompiers : <a href="tel:118" className="text-white">118</a>
                   </div>
-                  <h4 className="mb-3">
-                    Consultation en ligne
-                  </h4>
-                  <p className="m-0">
-                    Trouvez les docteurs qualifiés pour vos consultations en ligne ou à domicile
-                  </p>
-                  <a className="btn btn-lg btn-primary rounded-pill" href="">
-                    <i className="bi bi-arrow-right" />
-                  </a>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6">
-                <div className="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                  <div className="service-icon mb-4">
-                    <i className="fa fa-2x fa-ambulance text-white" />
+                  <div className="col-md-4">
+                    <i className="fas fa-hospital me-2"></i>
+                    CHU Sylvanus : <a href="tel:+22822212501" className="text-white">+228 22 21 25 01</a>
                   </div>
-                  <h4 className="mb-3">Service Ambulance</h4>
-                  <p className="m-0">
-                    Pour les urgences contactez les numeros suivantes :
-                    Santé(800), Sapeur pompier(118)
-                  </p>
-                  <a className="btn btn-lg btn-primary rounded-pill" href="">
-                    <i className="bi bi-arrow-right" />
-                  </a>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6">
-                <div className="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                  <div className="service-icon mb-4">
-                    <i className="fa fa-2x fa-pills text-white" />
-                  </div>
-                  <h4 className="mb-3">
-                    Pharmacie de garde
-                  </h4>
-                  <p className="m-0">
-                    Identifiez rapidement les pharmacies ouvertes 24h/24 et 7j/7 pour obtenir vos médicaments en toute urgence.
-                  </p>
-                  <Link className="btn btn-lg btn-primary rounded-pill" to="/pharmacies">
-                    <i className="bi bi-arrow-right" />
-                  </Link>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6">
-                <div className="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                  <div className="service-icon mb-4">
-                    <i className="fa fa-2x fa-microscope text-white" />
-                  </div>
-                  <h4 className="mb-3">Médecin à domicile</h4>
-                  <p className="m-0">
-                    Trouver des medcin pour vous consulter à la maison
-                  </p>
-                  <a className="btn btn-lg btn-primary rounded-pill" href="">
-                    <i className="bi bi-arrow-right" />
-                  </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {/* Services End */}
-      </>
-
-
-    </>
-  )
+      </div>
+    </div>
+  );
 }

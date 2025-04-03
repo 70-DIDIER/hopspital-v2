@@ -29,7 +29,7 @@ function App() {
           <Route path="/register" element={<Register />} />
 
           {/* Routes protégées */}
-          <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path="/" element={<PrivateRoute><Home /><Service /></PrivateRoute>} />
           <Route path="/service" element={<PrivateRoute><Service /></PrivateRoute>} />
           <Route path="/about" element={<PrivateRoute><About /></PrivateRoute>} />
           <Route path="/contact" element={<PrivateRoute><Contact /></PrivateRoute>} />
