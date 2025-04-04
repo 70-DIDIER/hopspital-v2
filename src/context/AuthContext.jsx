@@ -1,28 +1,53 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase"; // Assure-toi que c'est bien configuré
+import { useNavigate } from "react-router-dom";
 
+// Création du contexte
 const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
+// Fournisseur du contexte
+export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
-            setLoading(false);
-        });
-        return () => unsubscribe();
+        const token = localStorage.getItem("token");
+        if (token) {
+            fetch("http://localhost:8000/api/me", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+                .then((res) => {
+                    if (!res.ok) throw new Error("Token invalide");
+                    return res.json();
+                })
+                .then((data) => {
+                    setUser(data); // Met les infos de l'utilisateur connecté
+                })
+                .catch(() => {
+                    setUser(null);
+                    localStorage.removeItem("token");
+                });
+        }
     }, []);
 
+    const login = (userData, token) => {
+        localStorage.setItem("token", token);
+        setUser(userData);
+    };
+
+    const logout = () => {
+        localStorage.removeItem("token");
+        setUser(null);
+        navigate("/login");
+    };
+
     return (
-        <AuthContext.Provider value={{ user, loading }}>
-            {!loading && children}
+        <AuthContext.Provider value={{ user, login, logout, setUser }}>
+            {children}
         </AuthContext.Provider>
     );
-}
+};
 
-export function useAuth() {
-    return useContext(AuthContext);
-}
+// Hook personnalisé pour utiliser le contexte
+export const useAuth = () => useContext(AuthContext);

@@ -36,7 +36,7 @@ export default function Contact(){
                     className="d-flex align-items-center justify-content-center bg-primary rounded-circle mb-4"
                     style={{ width: 100, height: 70, transform: "rotate(-15deg)" }}
                 >
-                    <i className="bi bi-telephone text-white"></i>
+                    <i className="fa fa-2x fa-phone text-white"></i>
                 </div>
                 <h6 className="mb-0">96712198 /  96827451</h6>
                 </div>
@@ -50,7 +50,7 @@ export default function Contact(){
                     className="d-flex align-items-center justify-content-center bg-primary rounded-circle mb-4"
                     style={{ width: 100, height: 70, transform: "rotate(-15deg)" }}
                 >
-                    <i className="bi bi-envelope-at text-white" />
+                    <i className="fa fa-2x fa-envelope text-white" />
 
                 </div>
                 <h6 className="mb-0">adiloukoffi@ipnet.intitute.com</h6>

@@ -49,7 +49,7 @@ export default function About() {
                 </div>
                 <div className="col-sm-3 col-6">
                   <div className="bg-light text-center rounded-circle py-4">
-                    <i className="bi bi-3x bi-hospital text-primary mb-3" style={{ fontSize: '3rem' }} />
+                    <i className="fa fa-3x fa-hospital text-primary mb-3" style={{ fontSize: '3rem' }} />
                     <h6 className="mb-0">
                       Hopital/Clinique
                       <small className="d-block text-primary">à proximité</small>
@@ -58,7 +58,7 @@ export default function About() {
                 </div>
                 <div className="col-sm-3 col-6">
                   <div className="bg-light text-center rounded-circle py-4">
-                    <i className="bi bi-3x bi-calendar-check text-primary mb-3" style={{ fontSize: '3rem' }} />
+                    <i className="fa fa-3x fa-calendar-check text-primary mb-3" style={{ fontSize: '3rem' }} />
                     <h6 className="mb-0">
                       Prise de <small className="d-block text-primary">Rendez-vous</small>
                     </h6>

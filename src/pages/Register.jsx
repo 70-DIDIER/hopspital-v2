@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { auth } from "../firebase"; // Assure-toi que ton fichier firebase.js est bien configuré
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -10,18 +8,34 @@ export default function Register() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setError("");
+    // Déclare handleSubmit comme une fonction async
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Empêcher la soumission du formulaire par défaut
 
         if (password !== confirmPassword) {
-            setError("Les mots de passe ne correspondent pas !");
+            setError("Les mots de passe ne correspondent pas.");
             return;
         }
 
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            navigate("/"); // Redirige après inscription réussie
+            const response = await fetch("http://localhost:8000/api/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (!response.ok) {
+                let errorMessage = "Inscription échouée";
+                try {
+                    const data = await response.json();
+                    errorMessage = data.message || errorMessage;
+                } catch (_) {}
+                throw new Error(errorMessage);
+            }
+
+            navigate("/"); // Rediriger après inscription réussie
         } catch (err) {
             setError("Erreur d'inscription : " + err.message);
         }
@@ -70,11 +84,10 @@ export default function Register() {
                     {error && <p style={{ color: "red" }}>{error}</p>}
 
                     <button type="submit" className="btn btn-primary btn-block mb-3">
-                    S'inscrire
+                        S'inscrire
                     </button>
                 </form>
             </div>
-
         </>
     );
 }
