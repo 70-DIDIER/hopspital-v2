@@ -23,7 +23,7 @@ export default function Register() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ email, password }),
             });
 
             if (!response.ok) {
@@ -35,7 +35,7 @@ export default function Register() {
                 throw new Error(errorMessage);
             }
 
-            navigate("/home"); // Rediriger après inscription réussie
+            navigate("/"); // Rediriger après inscription réussie
         } catch (err) {
             setError("Erreur d'inscription : " + err.message);
         }

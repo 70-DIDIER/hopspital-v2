@@ -32,7 +32,7 @@ export default function Login() {
             const data = await response.json();
             localStorage.setItem("token", data.token); // stocker le token JWT
 
-            navigate("/home"); // redirection vers le profil
+            navigate("/"); // redirection vers le profil
         } catch (err) {
             setError("Erreur de connexion : " + err.message);
         }
