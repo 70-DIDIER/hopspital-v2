@@ -21,25 +21,26 @@ import './custom-bootstrap.scss';
 
 function App() {
   return (
-    <AuthProvider>
       <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+        <AuthProvider>
+          <Navbar />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-          {/* Routes protégées */}
-          <Route path="/" element={<PrivateRoute><Home /><Service /></PrivateRoute>} />
-          <Route path="/service" element={<PrivateRoute><Service /></PrivateRoute>} />
-          <Route path="/about" element={<PrivateRoute><About /></PrivateRoute>} />
-          <Route path="/contact" element={<PrivateRoute><Contact /></PrivateRoute>} />
-          <Route path="/pharmacies" element={<PrivateRoute><Pharmacies /></PrivateRoute>} />
-          <Route path="/Hopital" element={<PrivateRoute><Hopital /></PrivateRoute>} />
-          <Route path="/appointement" element={<PrivateRoute><Appointement /></PrivateRoute>} />
-        </Routes>
-        <Footer />
+            {/* Routes protégées */}
+            <Route path="/" element={<PrivateRoute><Home /><Service /></PrivateRoute>} />
+            <Route path="/service" element={<PrivateRoute><Service /></PrivateRoute>} />
+            <Route path="/about" element={<PrivateRoute><About /></PrivateRoute>} />
+            <Route path="/contact" element={<PrivateRoute><Contact /></PrivateRoute>} />
+            <Route path="/pharmacies" element={<PrivateRoute><Pharmacies /></PrivateRoute>} />
+            <Route path="/Hopital" element={<PrivateRoute><Hopital /></PrivateRoute>} />
+            <Route path="/appointement" element={<PrivateRoute><Appointement /></PrivateRoute>} />
+          </Routes>
+          <Footer />
+        </AuthProvider>
       </Router>
-    </AuthProvider>
+
   );
 }
 

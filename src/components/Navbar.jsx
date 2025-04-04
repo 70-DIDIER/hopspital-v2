@@ -1,17 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { auth } from "../firebase";
-import { signOut } from "firebase/auth";
 
 function Navbar() {
-    const { user } = useAuth();
+    const { user, setUser } = useAuth(); // assure-toi que setUser est bien exposé dans ton context
+    const navigate = useNavigate();
 
-    const handleLogout = async () => {
-        try {
-            await signOut(auth);
-        } catch (error) {
-            console.error("Erreur lors de la déconnexion:", error);
-        }
+    const handleLogout = () => {
+        // Supprimer le token ou tout autre info utilisateur
+        localStorage.removeItem("token");
+        setUser(null); // Remettre l'utilisateur à null dans le contexte
+        navigate("/login"); // Rediriger vers login
     };
 
     return (
