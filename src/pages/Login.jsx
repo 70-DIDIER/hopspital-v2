@@ -9,7 +9,7 @@ export default function Login() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setError("");
+        setError("");  // Réinitialiser les erreurs
 
         try {
             const response = await fetch("http://localhost:8000/api/login_check", {
@@ -21,11 +21,13 @@ export default function Login() {
             });
 
             if (!response.ok) {
-                let message = "Échec de la connexion";
+                let message = "Échec de la connexion, veuillez vérifier vos identifiants.";
                 try {
                     const data = await response.json();
-                    message = data.message || message;
-                } catch (_) {}
+                    message = data.message || message; // Si l'API renvoie un message d'erreur, l'utiliser
+                } catch (_) {
+                    // Si la réponse ne contient pas de JSON, on utilise le message par défaut
+                }
                 throw new Error(message);
             }
 
