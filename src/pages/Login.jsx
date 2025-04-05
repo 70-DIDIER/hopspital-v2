@@ -1,40 +1,26 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // Import du contexte
+import api from "../services/Api"; // Utilisation du service API configuré
 
 export default function Login() {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
+    const { login } = useAuth(); // Récupération de la méthode login du contexte
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setError("");
-
-        try {
-            const response = await fetch("http://localhost:8000/api/login_check", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username, password }),
-            });
-
-            if (!response.ok) {
-                let message = "Échec de la connexion";
-                try {
-                    const data = await response.json();
-                    message = data.message || message;
-                } catch (_) {}
-                throw new Error(message);
-            }
-
-            const data = await response.json();
-            localStorage.setItem("token", data.token); // stocker le token JWT
-
-            navigate("/"); // redirection vers le profil
-        } catch (err) {
-            setError("Erreur de connexion : " + err.message);
+        
+        // Validation Symfony-ready
+        const result = await login(email, password);
+        
+        if (result.success) {
+            navigate('/'); // Redirection post-login
+        } else {
+            setError(result.error);
         }
     };
 
@@ -65,15 +51,16 @@ export default function Login() {
                                                 Connectez-vous à votre compte
                                             </h5>
 
-                                            {error && <p style={{ color: "red" }}>{error}</p>}
+                                            {error && <div className="alert alert-danger">{error}</div>}
 
                                             <div className="form-outline mb-4">
                                                 <input
                                                     type="email"
                                                     className="form-control form-control-lg"
-                                                    value={username}
-                                                    onChange={(e) => setUsername(e.target.value)}
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
                                                     required
+                                                    autoComplete="username"
                                                 />
                                                 <label className="form-label">Votre Adresse Email</label>
                                             </div>
@@ -85,13 +72,25 @@ export default function Login() {
                                                     value={password}
                                                     onChange={(e) => setPassword(e.target.value)}
                                                     required
+                                                    autoComplete="current-password"
                                                 />
                                                 <label className="form-label">Votre mot de passe</label>
                                             </div>
 
                                             <div className="pt-1 mb-4">
-                                                <button className="btn btn-dark btn-lg btn-block" type="submit">
-                                                    Se connecter
+                                                <button 
+                                                    className="btn btn-dark btn-lg btn-block" 
+                                                    type="submit"
+                                                    disabled={isSubmitting}
+                                                >
+                                                    {isSubmitting ? (
+                                                        <span>
+                                                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                            Connexion...
+                                                        </span>
+                                                    ) : (
+                                                        "Se connecter"
+                                                    )}
                                                 </button>
                                             </div>
 

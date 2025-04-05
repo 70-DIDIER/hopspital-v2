@@ -1,17 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+
 function Navbar() {
-    const { user, setUser } = useAuth(); // assure-toi que setUser est bien exposé dans ton context
+    const { user, logout } = useAuth(); // Utilisez logout directement
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        // Supprimer le token ou tout autre info utilisateur
-        localStorage.removeItem("token");
-        setUser(null); // Remettre l'utilisateur à null dans le contexte
-        navigate("/login"); // Rediriger vers login
+        logout(); // Appel à la fonction du contexte
+        navigate("/login");
     };
-
     return (
         <div className="container-fluid sticky-top bg-white shadow-sm">
             <div className="container">
